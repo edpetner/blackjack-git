@@ -2,8 +2,28 @@
 <html>
 <head>
 <title>Black Jack</title>
+<script src="./jquery-1.11.3.js"></script>
+<script src="./scripts.js"></script>
 <script src="./game-vars.js"></script>
+<link rel="stylesheet" type='text/css' href="./blackjack.css" />
 </head>
 <body>
+  <div id="score-board">
+  </div>
+  <div id="dealer-hand">
+  </div>
+  <div id="player-hand">
+
+  </div>
+  <div id="controls">
+    <button id="play">Play Poker</button>
+    <button id="hit">Hit Me!</button>
+    <button id="stay">Stay</button>
+    <button id="new">New Hand</button>
+  </div>
+  <div id="game-over" class="hiding">
+    <button id="go-play">Another Hand</button>
+    <button id="end-play">End Game</button>
+  </div>
 </body>
 </html>

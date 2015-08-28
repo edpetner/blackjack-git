@@ -1,0 +1,59 @@
+.card-frame {
+  border: solid black 5px;
+  border-radius: 40px 40px 40px 40px;
+  background-image: url("./ripperNew.png");
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: 20px 60px;
+}
+.empty-frame {
+  border: solid black 5px;
+  border-radius: 40px 40px 40px 40px;
+  background-image: url("./ripperNew.png");
+  background-size: 70px;
+}
+#controls {
+  position:absolute;
+  top: 590px;
+  left: 60px;
+}
+
+#dealer-hand {
+  background-color: #CCC;
+
+}
+
+#player-hand {
+  background-color: #CCC;
+}
+
+.hiding {
+  visibility: hidden;
+}
+
+#game-over {
+  position: absolute;
+  vertical-align: middle;
+  text-align: center;
+  top: 200px;
+  left: 250px;
+  background-color: #000;
+  width: 200px;
+  height: 200px;
+}
+
+.heart {
+  transform: translate(70px,10px);
+}
+
+.diamond {
+ transform: translate(170px, -95px);
+}
+
+.club {
+ transform: translate(60px, -93px);
+}
+
+.spade {
+ transform: translate(165px, 5px);
+}

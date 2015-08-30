@@ -49,7 +49,7 @@ function translateNewVal(val){
 }
 
 function translateValue(val,index,total){
-  if (val[index] === 0){
+  if (val[index] === 1){
     var gg = val.length-(index+1);
     var qq = total + 11 + gg;
     if (qq > 21){
@@ -89,8 +89,10 @@ function currentHand(plyr){
  *   -- "decks" = number of decks to include in "liveDeck[]"
  */
 function makeDeck(decks){
-  for (var i=0; i<(decks*52); i++){
-    liveDeck.push(i);
+  for (var j=0; j<decks; j++){
+    for (var i=0; i<(52); i++){
+      liveDeck.push(i);
+    }
   }
 }
 
@@ -109,20 +111,15 @@ function translateC(card){
    *  removes that card from liveDeck[]
    *
    */
-function dealCard(){
+function dealCard(arg){
     var max = liveDeck.length-1;
-    var vv;
     var cardGen = Math.round(Math.random()*max);
     var dealt = liveDeck[cardGen];
-    if (dealt > 104){
-      dealt = Math.floor(dealt/3);
-    } else if (dealt > 52){
-      dealt = Math.floor(dealt/2);
-    }
 
     //console.log(vv, dealt);
     liveDeck.splice(cardGen,1);
-    return dealt;
+    //return dealt;
+    hands[arg].push(dealt);
 }
 //mainGame();
 //});

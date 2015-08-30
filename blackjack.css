@@ -30,7 +30,11 @@
 .hiding {
   visibility: hidden;
 }
-
+#go-play {
+  width: 200px;
+  height: 200px;
+  font-size: 30;
+}
 #game-over {
   position: absolute;
   vertical-align: middle;

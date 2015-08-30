@@ -6,12 +6,16 @@ $(function(){
 
   $('#hit').on('click',function(){
     hands[1].cards.push(dealCard());
-    updateX(hands[1].cards,1);
+    updateX(hands[1].cards,1,false);
     //drawScore();
   });
 
   $('#stay').on('click',function(){
-    dealerTurn();
+    while(getTotal(0) < 17){
+      dealerTurn();
+    }
+    updateX(hands[0].cards,0,true);
+    checkWinner();
   });
   $('#new').on('click',function(){
     newHand();
@@ -20,19 +24,14 @@ $(function(){
   function newHand(){
     resetHands();
     dealHands();
-    updateX(hands[0].cards,0);
-    updateX(hands[1].cards,1);
+    updateX(hands[0].cards,0,false);
+    updateX(hands[1].cards,1,false);
   }
 
 
   function dealerTurn(){
-    var ending = setInterval(function(){
       hands[0].cards.push(dealCard());
-      updateX(hands[0].cards,0);
-      if (getTotal(0) > 17){
-        clearInterval(ending);
-      }
-    },1000);
+      updateX(hands[0].cards,0,true);
   }
 
   function checkBust(arr){
@@ -61,8 +60,12 @@ $(function(){
     var dealer = getTotal(0);
     if (player > dealer){
       winner(1);
+      playAgain();
+    } else if (player===dealer){
+      playAgain();
     } else {
       winner(0);
+      playAgain();
     }
   }
 
@@ -92,7 +95,7 @@ $(function(){
   //updateX([1,22,33,44,51],0);
 //  updateX([1,12,23,34,51],1);
 
-  function createCard(suit, value, t, i) {
+  function createCard(suit, value,t ,i ,dTurn) {
 
     var hearts = $('<path d="M151.299,93.486 C149.846,87.955 147.772,82.763 145.077,77.912 C142.381,73.06 137.167,65.525 129.432,55.306 C123.76,47.806 120.268,43.049 118.956,41.033 C116.799,37.752 115.241,34.74 114.28,31.998 C113.319,29.256 112.838,26.478 112.838,23.666 C112.838,18.463 114.573,14.103 118.042,10.588 C121.51,7.072 125.799,5.314 130.909,5.314 C136.065,5.314 140.542,7.142 144.338,10.799 C147.198,13.517 149.518,17.572 151.299,22.963 C152.846,17.666 155.026,13.635 157.838,10.869 C161.729,7.119 166.229,5.244 171.338,5.244 C176.401,5.244 180.69,6.99 184.206,10.482 C187.721,13.974 189.479,18.135 189.479,22.963 C189.479,27.182 188.448,31.576 186.385,36.146 C184.323,40.717 180.338,46.705 174.432,54.111 C166.745,63.814 161.143,71.783 157.628,78.017 C154.862,82.939 152.753,88.096 151.299,93.486 L151.299,93.486 z" fill="#D48888 " class="heart"/>');
     var diamonds = $('<path d="M39.419,107.322 C29.928,122.904 19.033,137.607 7.076,151.385 C19.044,165.157 30.124,179.822 39.419,195.541 C48.715,179.822 59.794,165.157 71.763,151.385 C59.806,137.607 48.911,122.904 39.419,107.322 z" fill="#D48888" class="diamond"/>');
@@ -105,12 +108,12 @@ $(function(){
       value = "Q";
     } else if (value === 13){
       value = "K";
-    } else if (value === 0){
+    } else if (value === 1){
       value = "A";
     }
     //var cValue = $(value).css('color',sColor);
     var card;
-    if (t===0 && i===0){
+    if (t===0 && i===0 && dTurn===false){
       card = $('<div class="empty-frame" width="160" height="210"></div>');
       $('<svg width="150" height="200"></svg>').appendTo(card);
     }
@@ -140,7 +143,7 @@ $(function(){
 
   //$('body').append(createCard('hearts', 10).css({top: 10, left: 20}));
 
-  function updateX(playerHand,target) {
+  function updateX(playerHand,target,dTurn) {
     var tar,y;
     if (target === 1){
       y = 350;
@@ -149,12 +152,15 @@ $(function(){
       y = 80;
       tar = $('#dealer-hand');
     }
+
     tar.empty();
     playerHand.forEach(function(c, i) {
         //tar.append(getTotal(target));
-        tar.append(createCard(Math.floor(c/13), Math.floor(c % 13)+1,target,i).css({position: 'absolute', top: y, left: 100+i*160}).prop('outerHTML'));
+        tar.append(createCard(Math.floor(c/13), Math.floor(c % 13)+1,target,i,dTurn).css({position: 'absolute', top: y, left: 100+i*160}).prop('outerHTML'));
     });
-    $('<text></text>').text(checkBust(target)).css('background-color','white').css('font-size',45).css({position: 'absolute', top: y+50, left: 40}).appendTo(tar);
+    if (dTurn===true || target===1){
+      $('<text></text>').text(checkBust(target)).css('background-color','white').css('font-size',45).css({position: 'absolute', top: y+50, left: 40}).appendTo(tar);
+    }
     drawScore();
   }
 

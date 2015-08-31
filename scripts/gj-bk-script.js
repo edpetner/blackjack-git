@@ -4,12 +4,12 @@
 //--------------------
 var liveDeck = [];
 var player = {
-  name: "Player",
+  name: "player",
   cards: [],
   score: 100
 };
 var dealer = {
-  name: "Dealer",
+  name: "dealer",
   cards: [],
   score:  100
 };
@@ -23,7 +23,7 @@ var hands = [dealer,player];
   function makeDeck(arg){
     for (var j=0; j<arg; j++){
       for (var i=0; i<52; i++){
-        liveDec.push(i);
+        liveDeck.push(i);
       }
     }
   }
